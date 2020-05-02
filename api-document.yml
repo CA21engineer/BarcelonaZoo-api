@@ -30,8 +30,6 @@ schemes:
 paths:
   /challengetheme:
     post:
-      tags:
-        - pet
       summary: Add a new challenge theme
       description: チャレンジネタ新規作成
       operationId: ''
@@ -61,6 +59,10 @@ paths:
                 type: string
               ranking_type:
                 type: integer
+            required:
+              - title
+              - descriptioh
+              - recordable
           x-examples: {}
         - in: body
           name: body
@@ -91,40 +93,8 @@ paths:
         '200':
           description: OK
           schema:
-            type: object
-            properties:
-              '':
-                type: string
-    put:
-      tags:
-        - pet
-      summary: Update an existing pet
-      description: ''
-      operationId: updatePet
-      consumes:
-        - application/json
-        - application/xml
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: Pet object that needs to be added to the store
-          required: true
-          schema:
-            $ref: '#/definitions/Pet'
-      responses:
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-        '405':
-          description: Validation exception
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+            $ref: '#/definitions/challenge-theme'
+          examples: {}
     parameters: []
   /pet/findByStatus:
     get:
@@ -159,10 +129,7 @@ paths:
               $ref: '#/definitions/Pet'
         '400':
           description: Invalid status value
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+      security: []
   /pet/findByTags:
     get:
       tags:
@@ -191,10 +158,7 @@ paths:
               $ref: '#/definitions/Pet'
         '400':
           description: Invalid tag value
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+      security: []
       deprecated: true
   '/pet/{petId}':
     get:
@@ -222,8 +186,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Pet not found
-      security:
-        - api_key: []
+      security: []
     post:
       tags:
         - pet
@@ -255,10 +218,7 @@ paths:
       responses:
         '405':
           description: Invalid input
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+      security: []
     delete:
       tags:
         - pet
@@ -284,10 +244,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Pet not found
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+      security: []
   '/pet/{petId}/uploadImage':
     post:
       tags:
@@ -321,10 +278,7 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/ApiResponse'
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
+      security: []
   /store/inventory:
     get:
       tags:
@@ -343,8 +297,7 @@ paths:
             additionalProperties:
               type: integer
               format: int32
-      security:
-        - api_key: []
+      security: []
   /store/order:
     post:
       tags:
@@ -605,18 +558,7 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-securityDefinitions:
-  petstore_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:pets': modify pets in your account
-      'read:pets': read your pets
-  api_key:
-    type: apiKey
-    name: api_key
-    in: header
+securityDefinitions: {}
 definitions:
   Order:
     type: object
@@ -771,6 +713,10 @@ definitions:
       - description
       - user_id
       - recordable
+      - is_int
+      - unit
+      - ranking_type
+      - created_at
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
