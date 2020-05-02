@@ -560,53 +560,6 @@ paths:
           description: User not found
 securityDefinitions: {}
 definitions:
-  Order:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      petId:
-        type: integer
-        format: int64
-      quantity:
-        type: integer
-        format: int32
-      shipDate:
-        type: string
-        format: date-time
-      status:
-        type: string
-        description: Order Status
-        enum:
-          - placed
-          - approved
-          - delivered
-      complete:
-        type: boolean
-        default: false
-    xml:
-      name: Order
-  Category:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
-    xml:
-      name: Category
-  Tag:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
-    xml:
-      name: Tag
   Pet:
     type: object
     required:
@@ -701,12 +654,56 @@ definitions:
   user:
     title: user
     type: object
+    description: ''
     properties:
       id:
         type: integer
       uid:
         type: string
+        format: uuid
+    required:
+      - id
+      - uid
+  challenge-record:
+    title: challenge-record
+    type: object
     description: ''
+    properties:
+      id:
+        type: integer
+      content:
+        type: string
+        format: uri
+      comment:
+        type: string
+      challenge_theme:
+        $ref: '#/definitions/challenge-theme'
+      user:
+        $ref: '#/definitions/user'
+      record:
+        type: number
+      created_at:
+        type: string
+        format: date-time
+    required:
+      - id
+      - content
+      - comment
+      - challenge_theme
+      - user
+      - record
+      - created_at
+  tag:
+    title: tag
+    type: object
+    properties:
+      id:
+        type: integer
+      text:
+        type: string
+    required:
+      - id
+      - text
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
