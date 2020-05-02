@@ -28,7 +28,7 @@ schemes:
   - https
   - http
 paths:
-  /challengetheme:
+  /challengethemes:
     post:
       summary: Add a new challenge theme
       description: チャレンジネタ新規作成
@@ -96,40 +96,21 @@ paths:
             $ref: '#/definitions/challenge-theme'
           examples: {}
     parameters: []
-  /pet/findByStatus:
     get:
-      tags:
-        - pet
-      summary: Finds Pets by status
-      description: Multiple status values can be provided with comma separated strings
-      operationId: findPetsByStatus
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - name: status
-          in: query
-          description: Status values that need to be considered for filter
-          required: true
-          type: array
-          items:
-            type: string
-            enum:
-              - available
-              - pending
-              - sold
-            default: available
-          collectionFormat: multi
+      summary: ''
+      operationId: get-challengethemes
       responses:
         '200':
-          description: successful operation
+          description: チャレンジネタのリスト
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pet'
-        '400':
-          description: Invalid status value
-      security: []
+              $ref: '#/definitions/challenge-theme'
+      description: ''
+      parameters:
+        - type: boolean
+          in: query
+          name: recordable
   /pet/findByTags:
     get:
       tags:
@@ -372,70 +353,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Order not found
-  /user:
-    post:
-      tags:
-        - user
-      summary: Create user
-      description: This can only be done by the logged in user.
-      operationId: createUser
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: Created user object
-          required: true
-          schema:
-            type: object
-      responses:
-        default:
-          description: successful operation
-  /user/createWithArray:
-    post:
-      tags:
-        - user
-      summary: Creates list of users with given input array
-      description: ''
-      operationId: createUsersWithArrayInput
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: List of user object
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
-      responses:
-        default:
-          description: successful operation
-  /user/createWithList:
-    post:
-      tags:
-        - user
-      summary: Creates list of users with given input array
-      description: ''
-      operationId: createUsersWithListInput
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: List of user object
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
-      responses:
-        default:
-          description: successful operation
   /user/login:
     get:
       tags:
@@ -558,6 +475,124 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
+  '/challengethemes/{challenge_theme_id}':
+    parameters:
+      - type: string
+        name: challenge_theme_id
+        in: path
+        required: true
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/challenge-theme'
+      operationId: get-challengetheme-challenge_theme_id
+  /challengerecords:
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-challengerecords
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/challenge-record'
+      parameters:
+        - type: boolean
+          in: query
+          name: recordable
+      description: created_atが新しい順でチャレンジレコードのリストを取得
+  '/challengethemes/{challenge_theme_id}/challengerecords':
+    parameters:
+      - type: string
+        name: challenge_theme_id
+        in: path
+        required: true
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/challenge-record'
+      operationId: get-challengetheme-challenge_theme_id-challengerecord
+      parameters:
+        - type: string
+          in: query
+          name: sort
+  '/users/{user_id}/challengethemes':
+    parameters:
+      - type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: チャレンジネタのリスト
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/challenge-theme'
+      operationId: get-users-user_id-challengethemes
+      parameters:
+        - type: boolean
+          in: query
+          name: recordable
+      description: ''
+  '/users/{user_id}/challengerecords':
+    parameters:
+      - type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/challenge-record'
+      operationId: get-users-user_id-challengerecords
+      parameters:
+        - type: boolean
+          in: query
+          name: recordable
+  /users:
+    post:
+      summary: ''
+      operationId: post-users
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/user'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+              name:
+                type: string
+            required:
+              - token
+              - name
 securityDefinitions: {}
 definitions:
   Pet:
@@ -658,12 +693,11 @@ definitions:
     properties:
       id:
         type: integer
-      uid:
+      name:
         type: string
-        format: uuid
     required:
       - id
-      - uid
+      - name
   challenge-record:
     title: challenge-record
     type: object
