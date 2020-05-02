@@ -593,55 +593,23 @@ paths:
             required:
               - token
               - name
+  '/users/{user_id}':
+    parameters:
+      - type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/user'
+      operationId: get-users-user_id
 securityDefinitions: {}
 definitions:
-  Pet:
-    type: object
-    required:
-      - name
-      - photoUrls
-    properties:
-      id:
-        type: integer
-        format: int64
-      category:
-        $ref: '#/definitions/Category'
-      name:
-        type: string
-        example: doggie
-      photoUrls:
-        type: array
-        xml:
-          name: photoUrl
-          wrapped: true
-        items:
-          type: string
-      tags:
-        type: array
-        xml:
-          name: tag
-          wrapped: true
-        items:
-          $ref: '#/definitions/Tag'
-      status:
-        type: string
-        description: pet status in the store
-        enum:
-          - available
-          - pending
-          - sold
-    xml:
-      name: Pet
-  ApiResponse:
-    type: object
-    properties:
-      code:
-        type: integer
-        format: int32
-      type:
-        type: string
-      message:
-        type: string
   challenge-theme:
     title: challenge-theme
     type: object
