@@ -58,12 +58,12 @@ func (fa *firebaseAuth) MiddlewareFunc() gin.HandlerFunc {
 
 func (fa *firebaseAuth) middlewareImpl(c *gin.Context) {
 	// Authorizationヘッダーからjwtトークンを取得
-	var reqHeader requestHeader.Authorization
+	var reqHeader requestHeader.Auth
 	if err := c.BindHeader(&reqHeader); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-	jwtToken := strings.Replace(reqHeader.Token, "Bearer ", "", 1)
+	jwtToken := strings.Replace(reqHeader.Authorization, "Bearer ", "", 1)
 
 	// JWT の検証
 	authedUserToken, err := fa.client.VerifyIDToken(c, jwtToken)

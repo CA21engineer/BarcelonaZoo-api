@@ -1,5 +1,5 @@
 package requestHeader
 
-type Authorization struct {
-	Token string
+type Auth struct {
+	Authorization string
 }
