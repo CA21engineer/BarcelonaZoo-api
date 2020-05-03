@@ -4,6 +4,7 @@ import (
 	"barcelonaZoo/db"
 	"barcelonaZoo/pkg/model"
 	"context"
+
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 

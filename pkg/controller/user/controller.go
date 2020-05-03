@@ -15,7 +15,7 @@ func CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	if err := user.CreateNewUser(ctx, reqBody.Name);err != nil {
+	if err := user.CreateNewUser(ctx, reqBody.Name); err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
