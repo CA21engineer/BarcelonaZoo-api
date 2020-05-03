@@ -60,6 +60,12 @@ paths:
           schema:
             $ref: '#/definitions/challenge-theme'
           examples: {}
+        '400':
+          description: Bad Request
+          schema: {}
+        '403':
+          description: Forbidden
+          schema: {}
     parameters: []
     get:
       summary: ''
@@ -71,6 +77,9 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-theme'
+        '400':
+          description: Bad Request
+          schema: {}
       description: ''
       parameters:
         - type: boolean
@@ -454,6 +463,9 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/challenge-theme'
+        '404':
+          description: Not Found
+          schema: {}
       operationId: get-challengetheme-challenge_theme_id
   /challengerecords:
     parameters: []
@@ -467,6 +479,9 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-record'
+        '400':
+          description: Bad Request
+          schema: {}
       parameters:
         - type: boolean
           in: query
@@ -480,6 +495,12 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/challenge-record'
+        '400':
+          description: Bad Request
+          schema: {}
+        '403':
+          description: Forbidden
+          schema: {}
       parameters:
         - in: formData
           type: file
@@ -507,6 +528,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-record'
+        '400':
+          description: Bad Request
+          schema: {}
+        '404':
+          description: Not Found
+          schema: {}
       operationId: get-challengetheme-challenge_theme_id-challengerecord
       parameters:
         - type: string
@@ -528,6 +555,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-theme'
+        '400':
+          description: Bad Request
+          schema: {}
+        '404':
+          description: Not Found
+          schema: {}
       operationId: get-users-user_id-challengethemes
       parameters:
         - type: boolean
@@ -550,6 +583,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-record'
+        '400':
+          description: Bad Request
+          schema: {}
+        '404':
+          description: Not Found
+          schema: {}
       operationId: get-users-user_id-challengerecords
       parameters:
         - type: boolean
@@ -564,6 +603,12 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/user'
+        '400':
+          description: Bad Request
+          schema: {}
+        '401':
+          description: Unauthorized
+          schema: {}
       parameters:
         - in: body
           name: body
@@ -592,6 +637,9 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/user'
+        '404':
+          description: Not Found
+          schema: {}
       operationId: get-users-user_id
 securityDefinitions: {}
 definitions:
