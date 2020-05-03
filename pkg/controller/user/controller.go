@@ -13,18 +13,18 @@ import (
 func CreateUser(ctx *gin.Context) {
 	uid, ok := ctx.Get(middleware.AuthCtxKey)
 	if !ok {
-		ctx.AbortWithError(http.StatusUnauthorized, errors.New("認証されていません。再度ログインしてください。"))
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, errors.New("認証されていません。再度ログインしてください。").Error())
 		return
 	}
 
 	var reqBody requestBody.CreateUser
 	if err := ctx.BindJSON(&reqBody); err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, err)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
 	if err := user.CreateNewUser(ctx, uid.(string), reqBody.Name); err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 
