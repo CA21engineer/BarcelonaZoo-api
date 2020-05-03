@@ -116,6 +116,18 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# sqlboiler
+sqlboiler.toml
+
+# env
+.env
+
+# binary
+binary
+
+# firebase secret
+barcelona-zoo-firebase-adminsdk-as7uq-82b8457294.json
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -126,5 +138,3 @@ Temporary Items
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
-
-# End of https://www.gitignore.io/api/macos,jetbrains+all,visualstudiocode

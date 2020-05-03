@@ -1,5 +1,43 @@
 # 【おうちでハッカソン】BarcelonaZoo-api
 
+## セットアップ
+### 【sqlboiler】
+1. sqlboiler_example.tomlをコピーして、同じ階層にsqlboiler.tomlを作成する。
+2. 自分の開発環境(localhost)に合わせて `user`と`pass`を編集する
+例）user: `root` / pass: `password`の場合
+
+```toml
+pkgname="model"
+output="pkg/model"
+wipe=true
+[mysql]
+  dbname = "barcelona_zoo"
+  host   = "localhost"
+  port   = 3306
+  user   = "root"
+  pass   = "password"
+  sslmode= "false"
+```
+
+### 【環境変数】
+1. .env_exampleをコピーして、同じ階層に.envを作成する
+2. 自分の開発環境(localhost)に合わせて`MYSQL_USER`と`MYSQL_PASSWORD`を修正
+
+```.env
+MYSQL_USER=root
+MYSQL_PASSWORD=password
+MYSQL_HOST=localhost
+```
+
+## 使用できるMakeコマンド一覧
+```shell script
+help  使い方
+dbgen sqlboilerによるコード自動生成
+fmt   fmtの実行
+run   APIをビルドせずに立ち上げるコマンド
+build APIをビルドして立ち上げるコマンド
+```
+
 ## ブランチルール
 feat/[issue番号]
 
