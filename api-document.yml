@@ -85,44 +85,37 @@ paths:
         - type: boolean
           in: query
           name: recordable
-  /user/login:
-    get:
-      tags:
-        - user
-      summary: Logs user into the system
-      description: ''
-      operationId: loginUser
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: true
-          type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: true
-          type: string
+  /users/login:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-users-login
       responses:
         '200':
-          description: successful operation
+          description: ''
           schema:
-            type: string
+            $ref: '#/definitions/user'
           headers:
-            X-Rate-Limit:
-              type: integer
-              format: int32
-              description: calls per hour allowed by the user
-            X-Expires-After:
+            Authorization:
               type: string
-              format: date-time
-              description: date in UTC when token expires
+              description: ''
         '400':
-          description: Invalid username/password supplied
-  /user/logout:
+          description: Bad Request
+          schema: {}
+        '401':
+          description: Unauthorized
+          schema: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              it_token:
+                type: string
+            required:
+              - it_token
+  /users/logout:
     get:
       tags:
         - user
@@ -134,8 +127,9 @@ paths:
         - application/json
       parameters: []
       responses:
-        default:
+        '200':
           description: successful operation
+    parameters: []
   '/challengethemes/{challenge_theme_id}':
     parameters:
       - type: string
@@ -290,6 +284,10 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/user'
+          headers:
+            Authorization:
+              type: string
+              description: ''
         '400':
           description: Bad Request
           schema: {}
