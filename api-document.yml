@@ -9,8 +9,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: petstore.swagger.io
-basePath: /v2
+host: localhost
 tags:
   - name: pet
     description: Everything about your Pets
@@ -34,16 +33,10 @@ paths:
       description: チャレンジネタ新規作成
       operationId: ''
       consumes:
-        - application/json
-        - application/xml
+        - multipart/form-data
       produces:
-        - application/xml
         - application/json
       parameters:
-        - type: string
-          in: header
-          name: Authorization
-          description: JWT Token
         - in: formData
           type: file
           name: content
@@ -66,10 +59,14 @@ paths:
         '403':
           description: Forbidden
           schema: {}
+      security:
+        - Authorization: []
     parameters: []
     get:
       summary: ''
       operationId: get-challengethemes
+      produces:
+        - application/json
       responses:
         '200':
           description: チャレンジネタのリスト
@@ -87,49 +84,22 @@ paths:
           name: recordable
   /users/login:
     parameters: []
-    post:
+    get:
       summary: ''
-      operationId: post-users-login
+      operationId: get-users-login
       responses:
         '200':
-          description: ''
+          description: OK
           schema:
             $ref: '#/definitions/user'
-          headers:
-            Authorization:
-              type: string
-              description: ''
         '400':
           description: Bad Request
           schema: {}
         '401':
           description: Unauthorized
           schema: {}
-      parameters:
-        - in: body
-          name: body
-          schema:
-            type: object
-            properties:
-              it_token:
-                type: string
-            required:
-              - it_token
-  /users/logout:
-    get:
-      tags:
-        - user
-      summary: Logs out current logged in user session
-      description: ''
-      operationId: logoutUser
-      produces:
-        - application/xml
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: successful operation
-    parameters: []
+      security:
+        - Authorization: []
   '/challengethemes/{challenge_theme_id}':
     parameters:
       - type: string
@@ -171,6 +141,10 @@ paths:
     post:
       summary: ''
       operationId: post-challengerecords
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
       responses:
         '200':
           description: ''
@@ -193,6 +167,8 @@ paths:
           name: record_data
           description: JSON
           required: true
+      security:
+        - Authorization: []
   '/challengethemes/{challenge_theme_id}/challengerecords':
     parameters:
       - type: string
@@ -284,10 +260,7 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/user'
-          headers:
-            Authorization:
-              type: string
-              description: ''
+          headers: {}
         '400':
           description: Bad Request
           schema: {}
@@ -300,14 +273,12 @@ paths:
           schema:
             type: object
             properties:
-              id_token:
-                type: string
-                description: Firebase認証で取得したidToken
               name:
                 type: string
             required:
-              - id_token
               - name
+      security:
+        - Authorization: []
   '/users/{user_id}':
     parameters:
       - type: string
@@ -326,7 +297,10 @@ paths:
           description: Not Found
           schema: {}
       operationId: get-users-user_id
-securityDefinitions: {}
+securityDefinitions:
+  Authorization:
+    type: basic
+    description: ''
 definitions:
   challenge-theme:
     title: challenge-theme
@@ -427,3 +401,5 @@ definitions:
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
+security:
+  - Authorization: []
