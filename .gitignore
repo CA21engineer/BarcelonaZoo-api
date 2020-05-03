@@ -116,6 +116,15 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# sqlboiler
+sqlboiler.toml
+
+# env
+.env
+
+# binary
+binary
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -126,5 +135,3 @@ Temporary Items
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
-
-# End of https://www.gitignore.io/api/macos,jetbrains+all,visualstudiocode
