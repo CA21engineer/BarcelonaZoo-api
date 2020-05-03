@@ -8,8 +8,9 @@ import (
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
-func CreateNewUser(ctx context.Context, name string) error {
+func CreateNewUser(ctx context.Context, uid, name string) error {
 	newUser := &model.User{
+		UID:  uid,
 		Name: name,
 	}
 
