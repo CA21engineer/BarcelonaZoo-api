@@ -52,7 +52,19 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/challenge-theme'
-          examples: {}
+          examples:
+            example-1:
+              id: 2
+              title: トイレットペーパーリフティング
+              description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+              user:
+                id: 3
+                name: ロナウド
+              recordable: true
+              is_int: true
+              unit: 回
+              ranking_type: DESC
+              created_at: '2020-05-03 16:04:35'
         '400':
           description: Bad Request
           schema: {}
@@ -74,6 +86,19 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-theme'
+          examples:
+            example-1:
+              - id: 2
+                title: トイレットペーパーリフティング
+                description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                user:
+                  id: 3
+                  name: ロナウド
+                recordable: true
+                is_int: true
+                unit: 回
+                ranking_type: DESC
+                created_at: '2020-05-03 16:04:35'
         '400':
           description: Bad Request
           schema: {}
@@ -92,6 +117,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/user'
+          examples:
+            example-1:
+              id: 4
+              name: メッシ
         '400':
           description: Bad Request
           schema: {}
@@ -114,6 +143,19 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/challenge-theme'
+          examples:
+            example-1:
+              id: 2
+              title: トイレットペーパーリフティング
+              description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+              user:
+                id: 3
+                name: ロナウド
+              recordable: true
+              is_int: true
+              unit: 回
+              ranking_type: DESC
+              created_at: '2020-05-03 16:04:35'
         '404':
           description: Not Found
           schema: {}
@@ -130,6 +172,28 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-record'
+          examples:
+            example-1:
+              - id: 1
+                content: url
+                comment: 挑戦してみました！
+                challenge_theme:
+                  id: 2
+                  title: トイレットペーパーリフティング
+                  description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                  user:
+                    id: 3
+                    name: ロナウド
+                  recordable: true
+                  is_int: true
+                  unit: 回
+                  ranking_type: DESC
+                  created_at: '2020-05-03 16:04:35'
+                user:
+                  id: 4
+                  name: メッシ
+                record: 30
+                created_at: '2020-05-03 16:06:52'
         '400':
           description: Bad Request
           schema: {}
@@ -150,6 +214,28 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/challenge-record'
+          examples:
+            example-1:
+              id: 1
+              content: url
+              comment: 挑戦してみました！
+              challenge_theme:
+                id: 2
+                title: トイレットペーパーリフティング
+                description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                user:
+                  id: 3
+                  name: ロナウド
+                recordable: true
+                is_int: true
+                unit: 回
+                ranking_type: DESC
+                created_at: '2020-05-03 16:04:35'
+              user:
+                id: 4
+                name: メッシ
+              record: 30
+              created_at: '2020-05-03 16:06:52'
         '400':
           description: Bad Request
           schema: {}
@@ -185,6 +271,28 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-record'
+          examples:
+            example-1:
+              - id: 1
+                content: url
+                comment: 挑戦してみました！
+                challenge_theme:
+                  id: 2
+                  title: トイレットペーパーリフティング
+                  description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                  user:
+                    id: 3
+                    name: ロナウド
+                  recordable: true
+                  is_int: true
+                  unit: 回
+                  ranking_type: DESC
+                  created_at: '2020-05-03 16:04:35'
+                user:
+                  id: 4
+                  name: メッシ
+                record: 30
+                created_at: '2020-05-03 16:06:52'
         '400':
           description: Bad Request
           schema: {}
@@ -212,6 +320,19 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-theme'
+          examples:
+            example-1:
+              - id: 2
+                title: トイレットペーパーリフティング
+                description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                user:
+                  id: 3
+                  name: ロナウド
+                recordable: true
+                is_int: true
+                unit: 回
+                ranking_type: DESC
+                created_at: '2020-05-03 16:04:35'
         '400':
           description: Bad Request
           schema: {}
@@ -240,6 +361,28 @@ paths:
             type: array
             items:
               $ref: '#/definitions/challenge-record'
+          examples:
+            example-1:
+              - id: 1
+                content: url
+                comment: 挑戦してみました！
+                challenge_theme:
+                  id: 2
+                  title: トイレットペーパーリフティング
+                  description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                  user:
+                    id: 3
+                    name: ロナウド
+                  recordable: true
+                  is_int: true
+                  unit: 回
+                  ranking_type: DESC
+                  created_at: '2020-05-03 16:04:35'
+                user:
+                  id: 4
+                  name: メッシ
+                record: 30
+                created_at: '2020-05-03 16:06:52'
         '400':
           description: Bad Request
           schema: {}
@@ -261,6 +404,10 @@ paths:
           schema:
             $ref: '#/definitions/user'
           headers: {}
+          examples:
+            example-1:
+              id: 4
+              name: メッシ
         '400':
           description: Bad Request
           schema: {}
@@ -293,6 +440,10 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/user'
+          examples:
+            example-1:
+              id: 4
+              name: メッシ
         '404':
           description: Not Found
           schema: {}
@@ -346,6 +497,19 @@ definitions:
       - unit
       - ranking_type
       - created_at
+    x-examples:
+      example-1:
+        id: 2
+        title: トイレットペーパーリフティング
+        description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+        user:
+          id: 3
+          name: ロナウド
+        recordable: true
+        is_int: true
+        unit: 回
+        ranking_type: DESC
+        created_at: '2020-05-03 16:04:35'
   user:
     title: user
     type: object
@@ -358,6 +522,10 @@ definitions:
     required:
       - id
       - name
+    x-examples:
+      example-1:
+        id: 4
+        name: メッシ
   challenge-record:
     title: challenge-record
     type: object
@@ -387,6 +555,28 @@ definitions:
       - user
       - record
       - created_at
+    x-examples:
+      example-1:
+        id: 1
+        content: url
+        comment: 挑戦してみました！
+        challenge_theme:
+          id: 2
+          title: トイレットペーパーリフティング
+          description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+          user:
+            id: 3
+            name: ロナウド
+          recordable: true
+          is_int: true
+          unit: 回
+          ranking_type: DESC
+          created_at: '2020-05-03 16:04:35'
+        user:
+          id: 4
+          name: メッシ
+        record: 30
+        created_at: '2020-05-03 16:06:52'
   tag:
     title: tag
     type: object
