@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    environment:
+      - SWAGGER_JSON=/api-document.yml
+    ports:
+      - "88:8080"
+    volumes:
+      - ./api-document.yml:/api-document.yml
+    networks:
+      - openapi
+
+  swagger-server:
+    image: stoplight/prism:3
+    ports:
+      - "4011:4010"
+    command: mock -h 0.0.0.0 /api-document.yml
+    volumes:
+      - ./api-document.yml:/api-document.yml
+    networks:
+      - openapi
+
+networks:
+  openapi:
+

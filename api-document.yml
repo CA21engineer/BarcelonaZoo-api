@@ -9,22 +9,9 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: localhost
-tags:
-  - name: pet
-    description: Everything about your Pets
-    externalDocs:
-      description: Find out more
-      url: 'http://swagger.io'
-  - name: store
-    description: Access to Petstore orders
-  - name: user
-    description: Operations about user
-    externalDocs:
-      description: Find out more about our store
-      url: 'http://swagger.io'
+host: 'localhost:4011'
+tags: null
 schemes:
-  - https
   - http
 paths:
   /challengethemes:
@@ -450,8 +437,9 @@ paths:
       operationId: get-users-user_id
 securityDefinitions:
   Authorization:
-    type: basic
-    description: ''
+    name: X-JWT-TOKEN
+    type: apiKey
+    in: header
 definitions:
   challenge-theme:
     title: challenge-theme
@@ -591,5 +579,3 @@ definitions:
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
-security:
-  - Authorization: []
