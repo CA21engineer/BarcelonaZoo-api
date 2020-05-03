@@ -40,55 +40,20 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - in: body
-          name: body
-          description: new challenge theme object
-          required: true
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-              descriptioh:
-                type: string
-              recordable:
-                type: boolean
-              is_int:
-                type: boolean
-              unit:
-                type: string
-              ranking_type:
-                type: integer
-            required:
-              - title
-              - descriptioh
-              - recordable
-          x-examples: {}
-        - in: body
-          name: body
-          description: new challenge theme object
-          required: true
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-              descriptioh:
-                type: string
-              recordable:
-                type: boolean
-              is_int:
-                type: boolean
-              unit:
-                type: string
-              ranking_type:
-                type: integer
-          x-examples:
-            example-1: {}
         - type: string
           in: header
           name: Authorization
           description: JWT Token
+        - in: formData
+          type: file
+          name: content
+          description: image or video
+          required: true
+        - in: formData
+          type: string
+          name: theme_data
+          description: JSON
+          required: true
       responses:
         '200':
           description: OK
@@ -507,6 +472,25 @@ paths:
           in: query
           name: recordable
       description: created_atが新しい順でチャレンジレコードのリストを取得
+    post:
+      summary: ''
+      operationId: post-challengerecords
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/challenge-record'
+      parameters:
+        - in: formData
+          type: file
+          name: content
+          description: image or movie
+          required: true
+        - in: formData
+          type: string
+          name: record_data
+          description: JSON
+          required: true
   '/challengethemes/{challenge_theme_id}/challengerecords':
     parameters:
       - type: string
@@ -586,12 +570,13 @@ paths:
           schema:
             type: object
             properties:
-              token:
+              id_token:
                 type: string
+                description: Firebase認証で取得したidToken
               name:
                 type: string
             required:
-              - token
+              - id_token
               - name
   '/users/{user_id}':
     parameters:
