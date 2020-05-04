@@ -1,23 +1,21 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  description: 'This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.'
+  description: 【おうちハッカソン】バルセロナ動物園
   version: 1.0.0
-  title: Swagger Petstore
-  termsOfService: 'http://swagger.io/terms/'
-  contact:
-    email: apiteam@swagger.io
+  title: バルセロナ動物園アプリケーション
+  termsOfService: 'http://stoplight.io'
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: 'localhost:4011'
+host: stoplight.io/
 tags: null
 schemes:
-  - http
+  - https
 paths:
   /challengethemes:
     post:
-      summary: Add a new challenge theme
-      description: チャレンジネタ新規作成
+      summary: チャレンジネタ新規作成API
+      description: チャレンジネタ新規作成API
       operationId: ''
       consumes:
         - multipart/form-data
@@ -60,9 +58,11 @@ paths:
           schema: {}
       security:
         - Authorization: []
+      tags:
+        - ChallengeThemes
     parameters: []
     get:
-      summary: ''
+      summary: チャレンジネタ一覧取得API
       operationId: get-challengethemes
       produces:
         - application/json
@@ -89,11 +89,13 @@ paths:
         '400':
           description: Bad Request
           schema: {}
-      description: ''
+      description: チャレンジネタ一覧取得API
       parameters:
         - type: boolean
           in: query
           name: recordable
+      tags:
+        - ChallengeThemes
   /users/login:
     parameters: []
     get:
@@ -116,22 +118,26 @@ paths:
           schema: {}
       security:
         - Authorization: []
-  '/challengethemes/{challenge_theme_id}':
+  '/challengethemes/{challengeThemesID}':
     parameters:
-      - type: string
-        name: challenge_theme_id
+      - type: integer
+        name: challengeThemesID
         in: path
+        description: チャレンジテーマID
         required: true
+        schema:
+          type: integer
     get:
-      summary: ''
-      tags: []
+      summary: チャレンジテーマ詳細情報取得（チャレンジレコード一覧取得）
+      tags:
+        - ChallengeThemes
       responses:
         '200':
           description: OK
           schema:
             $ref: '#/definitions/challenge-theme'
           examples:
-            example-1:
+            example:
               id: 2
               title: トイレットペーパーリフティング
               description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
@@ -143,59 +149,43 @@ paths:
               unit: 回
               ranking_type: DESC
               created_at: '2020-05-03 16:04:35'
+          content:
+            application/json:
+              schema:
+                $ref: ''
         '404':
           description: Not Found
           schema: {}
       operationId: get-challengetheme-challenge_theme_id
+      description: チャレンジテーマ詳細情報取得（チャレンジレコード一覧取得）
   /challengerecords:
     parameters: []
-    get:
-      summary: ''
-      operationId: get-challengerecords
-      responses:
-        '200':
-          description: ''
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/challenge-record'
-          examples:
-            example-1:
-              - id: 1
-                content: url
-                comment: 挑戦してみました！
-                challenge_theme:
-                  id: 2
-                  title: トイレットペーパーリフティング
-                  description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
-                  user:
-                    id: 3
-                    name: ロナウド
-                  recordable: true
-                  is_int: true
-                  unit: 回
-                  ranking_type: DESC
-                  created_at: '2020-05-03 16:04:35'
-                user:
-                  id: 4
-                  name: メッシ
-                record: 30
-                created_at: '2020-05-03 16:06:52'
-        '400':
-          description: Bad Request
-          schema: {}
-      parameters:
-        - type: boolean
-          in: query
-          name: recordable
-      description: created_atが新しい順でチャレンジレコードのリストを取得
     post:
-      summary: ''
+      summary: 新規チャレンジ記録投稿API
       operationId: post-challengerecords
       consumes:
         - multipart/form-data
       produces:
         - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                profileImage:
+                  type: string
+                  format: binary
       responses:
         '200':
           description: ''
@@ -231,17 +221,18 @@ paths:
           schema: {}
       parameters:
         - in: formData
+          name: newRecordData
+          description: 新規チャレンジレコードデータ(JSON)
+          type: string
+        - in: formData
           type: file
           name: content
-          description: image or movie
-          required: true
-        - in: formData
-          type: string
-          name: record_data
-          description: JSON
-          required: true
+          description: 画像 or 動画
       security:
         - Authorization: []
+      description: 新規チャレンジ記録投稿API
+      tags:
+        - ChallengeRecord
   '/challengethemes/{challenge_theme_id}/challengerecords':
     parameters:
       - type: string
@@ -576,6 +567,15 @@ definitions:
     required:
       - id
       - text
+  challenge-record-new:
+    title: challenge-record-new
+    type: object
 externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
+  description: Find out more about StopLight
+  url: 'https://stoplight.io/p/mocks/12872/76599//'
+basePath: p/mocks/12872/76599/
+servers:
+  - description: stoplight-server
+    url: 'https://stoplight.io/p/mocks/12872/76599/'
+components:
+  schemas: {}
