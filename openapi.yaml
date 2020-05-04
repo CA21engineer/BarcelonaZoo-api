@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  description: 'This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.'
+  description: バルセロナ動物園
   version: 1.0.0
-  title: Swagger Petstore
+  title: バルセロナ動物園API
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: apiteam@swagger.io
@@ -17,21 +17,36 @@ paths:
       description: チャレンジネタ新規作成
       operationId: ''
       requestBody:
+        description: ''
         content:
           multipart/form-data:
             schema:
               type: object
               properties:
+                challenge_theme:
+                  type: object
+                  properties:
+                    titile:
+                      type: string
+                    description:
+                      type: string
+                    recordable:
+                      type: boolean
+                    is_int:
+                      type: boolean
+                    unit:
+                      type: string
+                    ranking_type:
+                      type: integer
                 content:
-                  description: image or video
                   type: string
                   format: binary
-                theme_data:
-                  description: JSON
+          application/json:
+            schema:
+              type: object
+              properties:
+                '':
                   type: string
-              required:
-                - content
-                - theme_data
       responses:
         '200':
           description: OK
@@ -68,7 +83,7 @@ paths:
         - Authorization: []
     parameters: []
     get:
-      summary: ''
+      summary: チャレンジネタ一覧取得API
       operationId: get-challengethemes
       responses:
         '200':
@@ -100,94 +115,29 @@ paths:
           content:
             application/json:
               schema: {}
-      description: ''
+      description: チャレンジネタ一覧取得API
       parameters:
         - in: query
           name: recordable
           schema:
             type: boolean
-  /users/login:
-    parameters: []
-    get:
-      summary: ''
-      operationId: get-users-login
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/user'
-            example-1:
-              examples:
-                response:
-                  value:
-                    id: 4
-                    name: メッシ
-        '400':
-          description: Bad Request
-          content:
-            '*/*':
-              schema: {}
-        '401':
-          description: Unauthorized
-          content:
-            '*/*':
-              schema: {}
-      security:
-        - Authorization: []
-  '/challengethemes/{challenge_theme_id}':
+      tags:
+        - ChallengeTheme
+  '/challengerecords/{challenge_theme_id}':
     parameters:
-      - name: challenge_theme_id
+      - schema:
+          type: integer
+        name: challenge_theme_id
         in: path
         required: true
-        schema:
-          type: string
     get:
-      summary: ''
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/challenge-theme'
-              examples: {}
-            example-1:
-              examples:
-                response:
-                  value:
-                    id: 2
-                    title: トイレットペーパーリフティング
-                    description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
-                    user:
-                      id: 3
-                      name: ロナウド
-                    recordable: true
-                    is_int: true
-                    unit: 回
-                    ranking_type: DESC
-                    created_at: '2020-05-03 16:04:35'
-              schema:
-                $ref: '#/components/schemas/challenge-record'
-          headers: {}
-        '404':
-          description: Not Found
-          content:
-            '*/*':
-              schema: {}
-      operationId: get-challengetheme-challenge_theme_id
-  /challengerecords:
-    parameters: []
-    get:
-      summary: ''
+      summary: チャレンジレコード一覧取得API
       operationId: get-challengerecords
       responses:
         '200':
           description: ''
           content:
-            '*/*':
+            application/json:
               schema:
                 type: array
                 items:
@@ -216,19 +166,32 @@ paths:
                         name: メッシ
                       record: 30
                       created_at: '2020-05-03 16:06:52'
-        '400':
-          description: Bad Request
+        '':
           content:
-            '*/*':
-              schema: {}
-      parameters:
-        - in: query
-          name: recordable
-          schema:
-            type: boolean
-      description: created_atが新しい順でチャレンジレコードのリストを取得
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/challenge-record'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      content: url
+                      comment: 挑戦してみました！
+                      user:
+                        id: 4
+                        name: メッシ
+                      record: 30
+                      fav_count: 156
+                      created_at: '2020-05-03 16:06:52'
+          description: ''
+      parameters: []
+      description: チャレンジネタに紐付くチャレンジレコードをranking_typeに応じたソート順で返却する
+      tags:
+        - ChallengeRecord
     post:
-      summary: ''
+      summary: 新規チャレンジレコード投稿API
       operationId: post-challengerecords
       responses:
         '200':
@@ -237,6 +200,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/challenge-record'
+              examples:
+                example-1:
+                  value:
+                    id: 1
+                    content: url
+                    comment: 挑戦してみました！
+                    user:
+                      id: 4
+                      name: メッシ
+                    record: 30
+                    fav_count: 0
+                    created_at: '2020-05-03 16:06:52'
             example-1:
               examples:
                 response:
@@ -283,184 +258,21 @@ paths:
                   format: binary
                 record_data:
                   description: JSON
-                  type: string
+                  type: object
+                  properties:
+                    comment:
+                      type: string
+                    record:
+                      type: number
               required:
                 - content
                 - record_data
       security:
         - Authorization: []
-  '/challengethemes/{challenge_theme_id}/challengerecords':
-    parameters:
-      - name: challenge_theme_id
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      summary: ''
-      tags: []
-      responses:
-        '200':
-          description: ''
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/challenge-record'
-            example-1:
-              examples:
-                response:
-                  value:
-                    - id: 1
-                      content: url
-                      comment: 挑戦してみました！
-                      challenge_theme:
-                        id: 2
-                        title: トイレットペーパーリフティング
-                        description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
-                        user:
-                          id: 3
-                          name: ロナウド
-                        recordable: true
-                        is_int: true
-                        unit: 回
-                        ranking_type: DESC
-                        created_at: '2020-05-03 16:04:35'
-                      user:
-                        id: 4
-                        name: メッシ
-                      record: 30
-                      created_at: '2020-05-03 16:06:52'
-        '400':
-          description: Bad Request
-          content:
-            '*/*':
-              schema: {}
-        '404':
-          description: Not Found
-          content:
-            '*/*':
-              schema: {}
-      operationId: get-challengetheme-challenge_theme_id-challengerecord
-      parameters:
-        - in: query
-          name: sort
-          schema:
-            type: string
-  '/users/{user_id}/challengethemes':
-    parameters:
-      - name: user_id
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      summary: ''
-      tags: []
-      responses:
-        '200':
-          description: チャレンジネタのリスト
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/challenge-theme'
-            example-1:
-              examples:
-                response:
-                  value:
-                    - id: 2
-                      title: トイレットペーパーリフティング
-                      description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
-                      user:
-                        id: 3
-                        name: ロナウド
-                      recordable: true
-                      is_int: true
-                      unit: 回
-                      ranking_type: DESC
-                      created_at: '2020-05-03 16:04:35'
-        '400':
-          description: Bad Request
-          content:
-            '*/*':
-              schema: {}
-        '404':
-          description: Not Found
-          content:
-            '*/*':
-              schema: {}
-      operationId: get-users-user_id-challengethemes
-      parameters:
-        - in: query
-          name: recordable
-          schema:
-            type: boolean
-      description: ''
-  '/users/{user_id}/challengerecords':
-    parameters:
-      - name: user_id
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      summary: ''
-      tags: []
-      responses:
-        '200':
-          description: ''
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/challenge-record'
-            example-1:
-              examples:
-                response:
-                  value:
-                    - id: 1
-                      content: url
-                      comment: 挑戦してみました！
-                      challenge_theme:
-                        id: 2
-                        title: トイレットペーパーリフティング
-                        description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
-                        user:
-                          id: 3
-                          name: ロナウド
-                        recordable: true
-                        is_int: true
-                        unit: 回
-                        ranking_type: DESC
-                        created_at: '2020-05-03 16:04:35'
-                      user:
-                        id: 4
-                        name: メッシ
-                      record: 30
-                      created_at: '2020-05-03 16:06:52'
-        '400':
-          description: Bad Request
-          content:
-            '*/*':
-              schema: {}
-        '404':
-          description: Not Found
-          content:
-            '*/*':
-              schema: {}
-      operationId: get-users-user_id-challengerecords
-      parameters:
-        - in: query
-          name: recordable
-          schema:
-            type: boolean
+      description: チャレンジネタに対するチャレンジレコードを投稿できる
   /users:
     post:
-      summary: ''
+      summary: 新規ユーザ作成API
       operationId: post-users
       responses:
         '200':
@@ -470,12 +282,15 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/user'
-            example-1:
+            application/json:
               examples:
                 response:
                   value:
                     id: 4
                     name: メッシ
+                    icon: 'https://s3.com/hoge.png'
+              schema:
+                $ref: '#/components/schemas/user'
         '400':
           description: Bad Request
           content:
@@ -494,39 +309,36 @@ paths:
               properties:
                 name:
                   type: string
+                icon:
+                  type: string
               required:
                 - name
+                - icon
+            examples: {}
       security:
         - Authorization: []
-  '/users/{user_id}':
+      description: 新規ユーザ作成API
+      tags:
+        - User
+  '/challengerecords/favorite/{challenge_record_id}':
+    put:
+      summary: チャレンジレコード投稿お気に入りAPI
+      operationId: put-challengerecords-favorite
+      responses:
+        '204':
+          description: No Content
+      description: チャレンジレコード投稿favorite機能
+      security:
+        - Authorization: []
+      requestBody: {}
+      tags:
+        - ChallengeRecord
     parameters:
-      - name: user_id
+      - schema:
+          type: integer
+        name: challenge_record_id
         in: path
         required: true
-        schema:
-          type: string
-    get:
-      summary: ''
-      tags: []
-      responses:
-        '200':
-          description: ''
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/user'
-            example-1:
-              examples:
-                response:
-                  value:
-                    id: 4
-                    name: メッシ
-        '404':
-          description: Not Found
-          content:
-            '*/*':
-              schema: {}
-      operationId: get-users-user_id
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -594,22 +406,36 @@ components:
       title: user
       type: object
       description: ''
+      x-examples:
+        example-1:
+          id: 4
+          name: メッシ
       properties:
         id:
           type: integer
         name:
           type: string
+        icon:
+          type: string
       required:
         - id
         - name
-      x-examples:
-        example-1:
-          id: 4
-          name: メッシ
+        - icon
     challenge-record:
       title: challenge-record
       type: object
       description: ''
+      x-examples:
+        example-1:
+          id: 1
+          content: url
+          comment: 挑戦してみました！
+          user:
+            id: 4
+            name: メッシ
+          record: 30
+          fav_count: 156
+          created_at: '2020-05-03 16:06:52'
       properties:
         id:
           type: integer
@@ -618,8 +444,6 @@ components:
           format: uri
         comment:
           type: string
-        challenge_theme:
-          $ref: '#/components/schemas/challenge-theme'
         user:
           $ref: '#/components/schemas/user'
         record:
@@ -627,36 +451,15 @@ components:
         created_at:
           type: string
           format: date-time
+        fav_count:
+          type: integer
       required:
         - id
         - content
         - comment
-        - challenge_theme
         - user
         - record
         - created_at
-      x-examples:
-        example-1:
-          id: 1
-          content: url
-          comment: 挑戦してみました！
-          challenge_theme:
-            id: 2
-            title: トイレットペーパーリフティング
-            description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
-            user:
-              id: 3
-              name: ロナウド
-            recordable: true
-            is_int: true
-            unit: 回
-            ranking_type: DESC
-            created_at: '2020-05-03 16:04:35'
-          user:
-            id: 4
-            name: メッシ
-          record: 30
-          created_at: '2020-05-03 16:06:52'
     tag:
       title: tag
       type: object
