@@ -1,0 +1,670 @@
+openapi: 3.0.0
+info:
+  description: 'This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.'
+  version: 1.0.0
+  title: Swagger Petstore
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags: []
+paths:
+  /challengethemes:
+    post:
+      summary: Add a new challenge theme
+      description: チャレンジネタ新規作成
+      operationId: ''
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  description: image or video
+                  type: string
+                  format: binary
+                theme_data:
+                  description: JSON
+                  type: string
+              required:
+                - content
+                - theme_data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/challenge-theme'
+            example-1:
+              examples:
+                response:
+                  value:
+                    id: 2
+                    title: トイレットペーパーリフティング
+                    description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                    user:
+                      id: 3
+                      name: ロナウド
+                    recordable: true
+                    is_int: true
+                    unit: 回
+                    ranking_type: DESC
+                    created_at: '2020-05-03 16:04:35'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Authorization: []
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-challengethemes
+      responses:
+        '200':
+          description: チャレンジネタのリスト
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/challenge-theme'
+              examples: {}
+            example-1:
+              examples:
+                response:
+                  value:
+                    - id: 2
+                      title: トイレットペーパーリフティング
+                      description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                      user:
+                        id: 3
+                        name: ロナウド
+                      recordable: true
+                      is_int: true
+                      unit: 回
+                      ranking_type: DESC
+                      created_at: '2020-05-03 16:04:35'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: {}
+      description: ''
+      parameters:
+        - in: query
+          name: recordable
+          schema:
+            type: boolean
+  /users/login:
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-users-login
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/user'
+            example-1:
+              examples:
+                response:
+                  value:
+                    id: 4
+                    name: メッシ
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema: {}
+      security:
+        - Authorization: []
+  '/challengethemes/{challenge_theme_id}':
+    parameters:
+      - name: challenge_theme_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/challenge-theme'
+              examples: {}
+            example-1:
+              examples:
+                response:
+                  value:
+                    id: 2
+                    title: トイレットペーパーリフティング
+                    description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                    user:
+                      id: 3
+                      name: ロナウド
+                    recordable: true
+                    is_int: true
+                    unit: 回
+                    ranking_type: DESC
+                    created_at: '2020-05-03 16:04:35'
+              schema:
+                $ref: '#/components/schemas/challenge-record'
+          headers: {}
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema: {}
+      operationId: get-challengetheme-challenge_theme_id
+  /challengerecords:
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-challengerecords
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/challenge-record'
+            example-1:
+              examples:
+                response:
+                  value:
+                    - id: 1
+                      content: url
+                      comment: 挑戦してみました！
+                      challenge_theme:
+                        id: 2
+                        title: トイレットペーパーリフティング
+                        description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                        user:
+                          id: 3
+                          name: ロナウド
+                        recordable: true
+                        is_int: true
+                        unit: 回
+                        ranking_type: DESC
+                        created_at: '2020-05-03 16:04:35'
+                      user:
+                        id: 4
+                        name: メッシ
+                      record: 30
+                      created_at: '2020-05-03 16:06:52'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema: {}
+      parameters:
+        - in: query
+          name: recordable
+          schema:
+            type: boolean
+      description: created_atが新しい順でチャレンジレコードのリストを取得
+    post:
+      summary: ''
+      operationId: post-challengerecords
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/challenge-record'
+            example-1:
+              examples:
+                response:
+                  value:
+                    id: 1
+                    content: url
+                    comment: 挑戦してみました！
+                    challenge_theme:
+                      id: 2
+                      title: トイレットペーパーリフティング
+                      description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                      user:
+                        id: 3
+                        name: ロナウド
+                      recordable: true
+                      is_int: true
+                      unit: 回
+                      ranking_type: DESC
+                      created_at: '2020-05-03 16:04:35'
+                    user:
+                      id: 4
+                      name: メッシ
+                    record: 30
+                    created_at: '2020-05-03 16:06:52'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema: {}
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  description: image or movie
+                  type: string
+                  format: binary
+                record_data:
+                  description: JSON
+                  type: string
+              required:
+                - content
+                - record_data
+      security:
+        - Authorization: []
+  '/challengethemes/{challenge_theme_id}/challengerecords':
+    parameters:
+      - name: challenge_theme_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/challenge-record'
+            example-1:
+              examples:
+                response:
+                  value:
+                    - id: 1
+                      content: url
+                      comment: 挑戦してみました！
+                      challenge_theme:
+                        id: 2
+                        title: トイレットペーパーリフティング
+                        description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                        user:
+                          id: 3
+                          name: ロナウド
+                        recordable: true
+                        is_int: true
+                        unit: 回
+                        ranking_type: DESC
+                        created_at: '2020-05-03 16:04:35'
+                      user:
+                        id: 4
+                        name: メッシ
+                      record: 30
+                      created_at: '2020-05-03 16:06:52'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema: {}
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema: {}
+      operationId: get-challengetheme-challenge_theme_id-challengerecord
+      parameters:
+        - in: query
+          name: sort
+          schema:
+            type: string
+  '/users/{user_id}/challengethemes':
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: チャレンジネタのリスト
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/challenge-theme'
+            example-1:
+              examples:
+                response:
+                  value:
+                    - id: 2
+                      title: トイレットペーパーリフティング
+                      description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                      user:
+                        id: 3
+                        name: ロナウド
+                      recordable: true
+                      is_int: true
+                      unit: 回
+                      ranking_type: DESC
+                      created_at: '2020-05-03 16:04:35'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema: {}
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema: {}
+      operationId: get-users-user_id-challengethemes
+      parameters:
+        - in: query
+          name: recordable
+          schema:
+            type: boolean
+      description: ''
+  '/users/{user_id}/challengerecords':
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/challenge-record'
+            example-1:
+              examples:
+                response:
+                  value:
+                    - id: 1
+                      content: url
+                      comment: 挑戦してみました！
+                      challenge_theme:
+                        id: 2
+                        title: トイレットペーパーリフティング
+                        description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+                        user:
+                          id: 3
+                          name: ロナウド
+                        recordable: true
+                        is_int: true
+                        unit: 回
+                        ranking_type: DESC
+                        created_at: '2020-05-03 16:04:35'
+                      user:
+                        id: 4
+                        name: メッシ
+                      record: 30
+                      created_at: '2020-05-03 16:06:52'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema: {}
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema: {}
+      operationId: get-users-user_id-challengerecords
+      parameters:
+        - in: query
+          name: recordable
+          schema:
+            type: boolean
+  /users:
+    post:
+      summary: ''
+      operationId: post-users
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/user'
+            example-1:
+              examples:
+                response:
+                  value:
+                    id: 4
+                    name: メッシ
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema: {}
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+      security:
+        - Authorization: []
+  '/users/{user_id}':
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: ''
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/user'
+            example-1:
+              examples:
+                response:
+                  value:
+                    id: 4
+                    name: メッシ
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema: {}
+      operationId: get-users-user_id
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'https://stoplight.io/p/mocks/12872/27371/'
+components:
+  securitySchemes:
+    Authorization:
+      name: X-JWT-TOKEN
+      type: apiKey
+      in: header
+  schemas:
+    challenge-theme:
+      title: challenge-theme
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        user:
+          $ref: '#/components/schemas/user'
+        recordable:
+          type: boolean
+        is_int:
+          type: boolean
+        unit:
+          type: string
+        ranking_type:
+          type: string
+          enum:
+            - ASC
+            - DESC
+            - FAV
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - description
+        - user
+        - recordable
+        - is_int
+        - unit
+        - ranking_type
+        - created_at
+      x-examples:
+        example-1:
+          id: 2
+          title: トイレットペーパーリフティング
+          description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+          user:
+            id: 3
+            name: ロナウド
+          recordable: true
+          is_int: true
+          unit: 回
+          ranking_type: DESC
+          created_at: '2020-05-03 16:04:35'
+    user:
+      title: user
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+        - id
+        - name
+      x-examples:
+        example-1:
+          id: 4
+          name: メッシ
+    challenge-record:
+      title: challenge-record
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+          format: uri
+        comment:
+          type: string
+        challenge_theme:
+          $ref: '#/components/schemas/challenge-theme'
+        user:
+          $ref: '#/components/schemas/user'
+        record:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - content
+        - comment
+        - challenge_theme
+        - user
+        - record
+        - created_at
+      x-examples:
+        example-1:
+          id: 1
+          content: url
+          comment: 挑戦してみました！
+          challenge_theme:
+            id: 2
+            title: トイレットペーパーリフティング
+            description: １０秒間でトイレットペーパーを使用して何回リフティングできるか競おう！
+            user:
+              id: 3
+              name: ロナウド
+            recordable: true
+            is_int: true
+            unit: 回
+            ranking_type: DESC
+            created_at: '2020-05-03 16:04:35'
+          user:
+            id: 4
+            name: メッシ
+          record: 30
+          created_at: '2020-05-03 16:06:52'
+    tag:
+      title: tag
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+      required:
+        - id
+        - text
