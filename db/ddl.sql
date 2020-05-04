@@ -41,7 +41,7 @@ CREATE TABLE tags (
     text    VARCHAR(128)    NOT NULL UNIQUE
 );
 
-CREATE TABLE theme_tag_relation (
+CREATE TABLE theme_tag_relations (
     id                  INT     AUTO_INCREMENT PRIMARY KEY,
     challenge_theme_id  INT     NOT NULL,
     tag_id              INT     NOT NULL
