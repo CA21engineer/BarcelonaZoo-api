@@ -16,6 +16,7 @@ CREATE TABLE challenge_themes (
     ranking_type    ENUM('ASC', 'DESC', 'FAV'),
     created_at      DATETIME        NOT NULL
 );
+CREATE INDEX idx_challenge_themes ON challenge_themes(created_at);
 
 CREATE TABLE challenge_records (
     id                  INT             AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +27,8 @@ CREATE TABLE challenge_records (
     record              FLOAT,
     created_at          DATETIME        NOT NULL
 );
+CREATE INDEX idx_challenge_records_01 ON challenge_records(challenge_theme_id);
+CREATE INDEX idx_challenge_records_02 ON challenge_records(created_at);
 
 CREATE TABLE favorites (
     id                  INT     AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +38,7 @@ CREATE TABLE favorites (
 
 CREATE TABLE tags (
     id      INT             AUTO_INCREMENT PRIMARY KEY,
-    text    VARCHAR(128)    NOT NULL
+    text    VARCHAR(128)    NOT NULL UNIQUE
 );
 
 CREATE TABLE theme_tag_relation (
