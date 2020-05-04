@@ -27,8 +27,7 @@ CREATE TABLE challenge_records (
     record              FLOAT,
     created_at          DATETIME        NOT NULL
 );
-CREATE INDEX idx_challenge_records_01 ON challenge_records(challenge_theme_id);
-CREATE INDEX idx_challenge_records_02 ON challenge_records(created_at);
+CREATE INDEX idx_challenge_records ON challenge_records(challenge_theme_id, created_at);
 
 CREATE TABLE favorites (
     id                  INT     AUTO_INCREMENT PRIMARY KEY,
