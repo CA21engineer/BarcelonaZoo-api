@@ -4,7 +4,17 @@
 package model
 
 var TableNames = struct {
-	Users string
+	ChallengeRecords  string
+	ChallengeThemes   string
+	Favorites         string
+	Tags              string
+	ThemeTagRelations string
+	Users             string
 }{
-	Users: "users",
+	ChallengeRecords:  "challenge_records",
+	ChallengeThemes:   "challenge_themes",
+	Favorites:         "favorites",
+	Tags:              "tags",
+	ThemeTagRelations: "theme_tag_relations",
+	Users:             "users",
 }
