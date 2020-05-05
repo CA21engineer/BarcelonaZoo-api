@@ -3,6 +3,7 @@ package challengetheme
 import (
 	"barcelonaZoo/api/middleware"
 	"barcelonaZoo/api/requestBody"
+	"barcelonaZoo/api/response"
 	"barcelonaZoo/pkg/service/challengetheme"
 	"encoding/json"
 	"errors"
@@ -32,7 +33,7 @@ func CreateChallengeTheme(ctx *gin.Context) {
 		return
 	}
 
-	newChallengeData, err := challengetheme.CreateNewChallengeTheme(
+	newChallengeThemeData, err := challengetheme.CreateNewChallengeTheme(
 		ctx,
 		uid.(string),
 		reqBody.Title,
@@ -49,6 +50,6 @@ func CreateChallengeTheme(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, newChallengeData)
+	ctx.AbortWithStatusJSON(http.StatusOK, response.ConvertToChallengeThemeResponse(newChallengeThemeData))
 	return
 }

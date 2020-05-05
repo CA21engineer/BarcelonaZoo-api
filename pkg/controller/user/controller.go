@@ -3,6 +3,7 @@ package user
 import (
 	"barcelonaZoo/api/middleware"
 	"barcelonaZoo/api/requestBody"
+	"barcelonaZoo/api/response"
 	"barcelonaZoo/pkg/service/user"
 	"errors"
 	"net/http"
@@ -24,12 +25,13 @@ func CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	if err := user.CreateNewUser(ctx, uid.(string), reqBody.Name); err != nil {
+	insertedData, err := user.CreateNewUser(ctx, uid.(string), reqBody.Name, reqBody.Icon)
+	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ctx.Status(http.StatusNoContent)
+	ctx.AbortWithStatusJSON(http.StatusOK, response.ConvertToUserResponse(insertedData))
 	return
 }
 
@@ -37,13 +39,16 @@ func GetUser(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"status": "user id must be int"})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "user id must be int"})
 		return
 	}
 
-	if u, err := user.GetUser(ctx, id); err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"status": "not found"})
-	} else {
-		ctx.JSON(http.StatusOK, u)
+	u, err := user.GetUser(ctx, id)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"status": "not found"})
+		return
 	}
+
+	ctx.AbortWithStatusJSON(http.StatusOK, response.ConvertToUserResponse(u))
+	return
 }
