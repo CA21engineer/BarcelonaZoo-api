@@ -2,6 +2,7 @@ package api
 
 import (
 	"barcelonaZoo/api/middleware"
+	"barcelonaZoo/pkg/controller/challengerecord"
 	"barcelonaZoo/pkg/controller/challengetheme"
 	"barcelonaZoo/pkg/controller/user"
 
@@ -32,14 +33,20 @@ func GetRouter() *gin.Engine {
 		firebaseGroup.POST("/users", user.CreateUser)
 
 		// challengetheme api
-		firebaseGroup.POST("/challengetheme", challengetheme.CreateChallengeTheme)
+		firebaseGroup.POST("/challengethemes", challengetheme.CreateChallengeTheme)
+
+		// challengerecord api
+		firebaseGroup.POST("/challengerecords", challengerecord.CreateChallengeRecord)
 	}
 
 	// user api
 	r.GET("/users/:id", user.GetUser)
 
 	// challengetheme api
-	r.GET("/challengetheme", challengetheme.GetChallengeThemes)
+	r.GET("/challengethemes", challengetheme.GetChallengeThemes)
+
+	// challengerecord api
+	r.GET("/challengethemes/:id/challengerecords", challengerecord.GetChallengeRecords)
 
 	return r
 }
