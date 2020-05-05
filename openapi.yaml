@@ -26,7 +26,7 @@ paths:
                 challenge_theme:
                   type: object
                   properties:
-                    titile:
+                    title:
                       type: string
                     description:
                       type: string
