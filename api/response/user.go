@@ -10,7 +10,7 @@ type User struct {
 	Icon string `json:"icon"`
 }
 
-func SerializeUser(u model.User) User {
+func SerializeUser(u *model.User) *User {
 	var icon string
 	if u.Icon.Valid == true {
 		icon = u.Icon.String
@@ -18,7 +18,7 @@ func SerializeUser(u model.User) User {
 		icon = "default icon url" // 書き換える
 	}
 
-	return User{
+	return &User{
 		Id:   u.ID,
 		Name: u.Name,
 		Icon: icon,

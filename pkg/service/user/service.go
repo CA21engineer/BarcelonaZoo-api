@@ -6,6 +6,7 @@ import (
 	"barcelonaZoo/pkg/model"
 	"context"
 
+	"github.com/gin-gonic/gin"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
@@ -22,10 +23,10 @@ func CreateNewUser(ctx context.Context, uid, name string) error {
 	return nil
 }
 
-func GetUser(ctx context.Context, id int) (response.User, error) {
+func GetUser(ctx *gin.Context, id int) (*response.User, error) {
 	u, err := model.FindUser(ctx, db.DB, id)
 	if err != nil {
-		return nil, err
+		return &response.User{}, err
 	}
 
 	return response.SerializeUser(u), nil
