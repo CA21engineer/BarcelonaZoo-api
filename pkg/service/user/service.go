@@ -1,6 +1,7 @@
 package user
 
 import (
+	"barcelonaZoo/api/response"
 	"barcelonaZoo/db"
 	"barcelonaZoo/pkg/model"
 	"context"
@@ -19,4 +20,13 @@ func CreateNewUser(ctx context.Context, uid, name string) error {
 	}
 
 	return nil
+}
+
+func GetUser(ctx context.Context, id int) (response.User, error) {
+	u, err := model.FindUser(ctx, db.DB, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.SerializeUser(u), nil
 }
