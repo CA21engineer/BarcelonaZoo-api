@@ -125,8 +125,8 @@ sqlboiler.toml
 # binary
 binary
 
-# firebase secret
-barcelona-zoo-firebase-adminsdk-as7uq-82b8457294.json
+# GCP secret
+barcelona-zoo-282d16c6bf66.json
 
 ### VisualStudioCode ###
 .vscode/*

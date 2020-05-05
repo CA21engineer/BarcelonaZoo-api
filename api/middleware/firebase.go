@@ -31,7 +31,7 @@ func CreateFirebaseInstance() FirebaseAuth {
 
 	// get credential of firebase
 	var opt option.ClientOption
-	opt = option.WithCredentialsFile("barcelona-zoo-firebase-adminsdk-as7uq-82b8457294.json")
+	opt = option.WithCredentialsFile("barcelona-zoo-282d16c6bf66.json")
 
 	// firebase appの作成
 	app, err := firebase.NewApp(ctx, nil, opt)

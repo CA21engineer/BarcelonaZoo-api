@@ -3,8 +3,8 @@ help: ## 使い方
 
 dbgen: ## sqlboilerによるコード自動生成
 	# sqlboilerのインストール
-	GO111MODULE=off go get -u -t github.com/volatiletech/sqlboiler
-	GO111MODULE=off go get -u github.com/volatiletech/sqlboiler/drivers/sqlboiler-mysql
+	GO111MODULE=on go get github.com/volatiletech/sqlboiler@master
+	go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-mysql@master
 
 	# DDL定義を元にコードを自動生成
 	sqlboiler mysql
