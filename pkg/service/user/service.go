@@ -5,7 +5,7 @@ import (
 	"barcelonaZoo/pkg/model"
 	"context"
 
-	"github.com/volatiletech/sqlboiler/v4/boil"
+	"github.com/volatiletech/sqlboiler/boil"
 )
 
 func CreateNewUser(ctx context.Context, uid, name string) error {

@@ -3,8 +3,9 @@ package main
 import (
 	"barcelonaZoo/api"
 	"barcelonaZoo/db"
-	"github.com/joho/godotenv"
 	"log"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {

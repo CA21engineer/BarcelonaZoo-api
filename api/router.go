@@ -28,5 +28,10 @@ func GetRouter() *gin.Engine {
 	userGroup.Use(firebaseClient.MiddlewareFunc())
 	userRouter(userGroup)
 
+	// challengetheme api
+	challengeThemGroup := r.Group("/challengetheme")
+	challengeThemGroup.Use(firebaseClient.MiddlewareFunc())
+	createChallengeThemeRouter(challengeThemGroup)
+
 	return r
 }
