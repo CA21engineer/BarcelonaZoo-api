@@ -385,16 +385,6 @@ components:
             icon: 'https://storage.googleapis.com/barcelona-zoo-backet/content/b0927d4c-7e02-426c-9239-ceaed8e695c3dst_img.jpg'
           record: 30
           created_at: '2020-05-03 16:06:52'
-        example-2:
-          id: 2
-          content: 'https://storage.cloud.google.com/barcelona-zoo-backet/content/8838183e-0cf8-4a54-9b3f-05cf2cf270c1A01A3FCC-0B68-4913-A8FA-459DDF63DAB5.jpeg'
-          comment: 俺が勝つ！
-          user:
-            id: 4
-            name: メッシ
-            icon: 'https://storage.googleapis.com/barcelona-zoo-backet/content/b0927d4c-7e02-426c-9239-ceaed8e695c3dst_img.jpg'
-          record: 30
-          created_at: '2020-05-03 16:06:52'
       properties:
         id:
           type: integer
