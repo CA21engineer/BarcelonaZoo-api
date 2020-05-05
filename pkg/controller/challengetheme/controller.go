@@ -53,3 +53,13 @@ func CreateChallengeTheme(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusOK, response.ConvertToChallengeThemeResponse(newChallengeThemeData))
 	return
 }
+
+func GetChallengeThemes(ctx *gin.Context) {
+	slice, err := challengetheme.GetChallengeThemes(ctx)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.AbortWithStatusJSON(http.StatusOK, response.ConvertToChallengeThemeSliceResponse(slice))
+	return
+}

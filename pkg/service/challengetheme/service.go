@@ -10,6 +10,7 @@ import (
 
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
+	"github.com/volatiletech/sqlboiler/queries/qm"
 )
 
 func CreateNewChallengeTheme(
@@ -50,4 +51,15 @@ func CreateNewChallengeTheme(
 
 	// トランザクション終了
 	return newChallengeTheme, nil
+}
+
+func GetChallengeThemes(ctx context.Context) (model.ChallengeThemeSlice, error) {
+	challengeThemeSlice, err := model.ChallengeThemes(
+		qm.Load("User"),
+		qm.OrderBy("challenge_themes.created_at"),
+	).All(ctx, db.DB)
+	if err != nil {
+		return nil, err
+	}
+	return challengeThemeSlice, nil
 }

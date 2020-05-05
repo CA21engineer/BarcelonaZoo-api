@@ -2,6 +2,8 @@ package api
 
 import (
 	"barcelonaZoo/api/middleware"
+	"barcelonaZoo/pkg/controller/challengetheme"
+	"barcelonaZoo/pkg/controller/user"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -23,15 +25,21 @@ func GetRouter() *gin.Engine {
 	testGroup := r.Group("/test")
 	testRouter(testGroup)
 
+	firebaseGroup := r.Group("")
+	firebaseGroup.Use(firebaseClient.MiddlewareFunc())
+	{
+		// user api
+		firebaseGroup.POST("/users", user.CreateUser)
+
+		// challengetheme api
+		firebaseGroup.POST("/challengetheme", challengetheme.CreateChallengeTheme)
+	}
+
 	// user api
-	userGroup := r.Group("/users")
-	userGroup.Use(firebaseClient.MiddlewareFunc())
-	userRouter(userGroup)
+	r.GET("/users/:id", user.GetUser)
 
 	// challengetheme api
-	challengeThemGroup := r.Group("/challengetheme")
-	challengeThemGroup.Use(firebaseClient.MiddlewareFunc())
-	createChallengeThemeRouter(challengeThemGroup)
+	r.GET("/challengetheme", challengetheme.GetChallengeThemes)
 
 	return r
 }
