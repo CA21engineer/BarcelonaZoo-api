@@ -6,6 +6,7 @@ import (
 	"barcelonaZoo/pkg/service/user"
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,4 +31,19 @@ func CreateUser(ctx *gin.Context) {
 
 	ctx.Status(http.StatusNoContent)
 	return
+}
+
+func GetUser(ctx *gin.Context) {
+	idStr := ctx.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"status": "user id must be int"})
+		return
+	}
+
+	if u, err := user.GetUser(ctx, id); err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"status": "not found"})
+	} else {
+		ctx.JSON(http.StatusOK, u)
+	}
 }
