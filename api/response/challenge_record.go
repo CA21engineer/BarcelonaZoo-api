@@ -1,33 +1,27 @@
 package response
 
 import (
-	"time"
+	"barcelonaZoo/pkg/model"
+
+	"github.com/volatiletech/null/v8"
 )
 
 type ChallengeRecord struct {
-	Id             int    `json:"id"`
-	Content        string `json:"content"`
-	Comment        string `json:"comment"`
-	ChallengeTheme struct {
-		Id          int    `json:"id"`
-		Title       string `json:"title"`
-		Description string `json:"description"`
-		User        struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Icon string `json:"icon"`
-		} `json:"user"`
-		Recordable  bool      `json:"recordable"`
-		IsInt       bool      `json:"is_int"`
-		Unit        bool      `json:"unit"`
-		RankingType string    `json:"rankint_type"`
-		CreatedAt   time.Time `json:"created_at"`
-	} `json:"challenge_theme"`
-	User struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Icon string `json:"icon"`
-	} `json:"user"`
-	Record    float32   `json:"record"`
-	CreatedAt time.Time `json:"created_at"`
+	Id        int          `json:"id"`
+	Content   string       `json:"content"`
+	Comment   string       `json:"comment"`
+	User      User         `json:"user"`
+	Record    null.Float32 `json:"record"`
+	CreatedAt string       `json:"created_at"`
+}
+
+func SerializeChallengeRecord(r *model.ChallengeRecord, u *model.User) *ChallengeRecord {
+	return &ChallengeRecord{
+		Id:        r.ID,
+		Content:   r.Content,
+		Comment:   r.Comment,
+		User:      *SerializeUser(u),
+		Record:    r.Record,
+		CreatedAt: r.CreatedAt.Format("2000-01-01 00:00:00"),
+	}
 }
