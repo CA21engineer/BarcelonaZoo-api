@@ -155,13 +155,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/challenge-record'
-        '':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/challenge-record'
               examples:
                 example-1:
                   value:
@@ -174,7 +167,6 @@ paths:
                         icon: 'https://storage.googleapis.com/barcelona-zoo-backet/content/b0927d4c-7e02-426c-9239-ceaed8e695c3dst_img.jpg'
                       record: 30
                       created_at: '2020-05-03 16:06:52'
-          description: ''
       parameters: []
       description: チャレンジネタに紐付くチャレンジレコードをranking_typeに応じたソート順で返却する
       tags:
