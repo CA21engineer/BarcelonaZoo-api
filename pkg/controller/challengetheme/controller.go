@@ -49,6 +49,6 @@ func CreateChallengeTheme(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusNoContent, newChallengeData)
+	ctx.JSON(http.StatusOK, newChallengeData)
 	return
 }

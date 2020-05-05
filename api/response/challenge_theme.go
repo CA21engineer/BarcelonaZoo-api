@@ -3,7 +3,7 @@ package response
 import (
 	"barcelonaZoo/pkg/model"
 
-	"github.com/volatiletech/null/v8"
+	"github.com/volatiletech/null"
 )
 
 type ChallengeTheme struct {
