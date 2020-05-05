@@ -49,7 +49,6 @@ func CreateNewChallengeTheme(
 		return nil, err
 	}
 
-	// トランザクション終了
 	return newChallengeTheme, nil
 }
 

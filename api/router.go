@@ -36,7 +36,7 @@ func GetRouter() *gin.Engine {
 		firebaseGroup.POST("/challengethemes", challengetheme.CreateChallengeTheme)
 
 		// challengerecord api
-		firebaseGroup.POST("/challengerecords", challengerecord.CreateChallengeRecord)
+		firebaseGroup.POST("/challengerecords/:id", challengerecord.CreateChallengeRecord)
 	}
 
 	// user api
@@ -46,7 +46,7 @@ func GetRouter() *gin.Engine {
 	r.GET("/challengethemes", challengetheme.GetChallengeThemes)
 
 	// challengerecord api
-	r.GET("/challengethemes/:id/challengerecords", challengerecord.GetChallengeRecords)
+	r.GET("/challengerecords/:id", challengerecord.GetChallengeRecords)
 
 	return r
 }
