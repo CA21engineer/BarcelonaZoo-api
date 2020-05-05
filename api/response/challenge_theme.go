@@ -7,6 +7,7 @@ import (
 type ChallengeTheme struct {
 	ID          int    `json:"id"`
 	Title       string `json:"title"`
+	Content     string `json:"content"`
 	Description string `json:"description"`
 	User        *User  `json:"user"`
 	Recordable  bool   `json:"recordable"`
@@ -23,6 +24,7 @@ func ConvertToChallengeThemeResponse(challengeThemeData *model.ChallengeTheme) *
 		return &ChallengeTheme{
 			ID:          challengeThemeData.ID,
 			Title:       challengeThemeData.Title,
+			Content:     challengeThemeData.Content,
 			Description: challengeThemeData.Description,
 			User:        nil,
 			Recordable:  challengeThemeData.Recordable,
@@ -36,6 +38,7 @@ func ConvertToChallengeThemeResponse(challengeThemeData *model.ChallengeTheme) *
 	return &ChallengeTheme{
 		ID:          challengeThemeData.ID,
 		Title:       challengeThemeData.Title,
+		Content:     challengeThemeData.Content,
 		Description: challengeThemeData.Description,
 		User:        ConvertToUserResponse(challengeThemeData.R.User),
 		Recordable:  challengeThemeData.Recordable,
