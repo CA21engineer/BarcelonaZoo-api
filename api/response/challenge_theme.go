@@ -13,7 +13,7 @@ type ChallengeTheme struct {
 	Recordable  bool   `json:"recordable"`
 	IsInt       bool   `json:"is_int"`
 	Unit        string `json:"unit"`
-	RankingType int    `json:"rankint_type"`
+	RankingType int    `json:"ranking_type"`
 	CreatedAt   string `json:"created_at"`
 }
 

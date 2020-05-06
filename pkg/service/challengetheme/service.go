@@ -49,7 +49,6 @@ func CreateNewChallengeTheme(
 		return nil, err
 	}
 
-	// トランザクション終了
 	return newChallengeTheme, nil
 }
 
@@ -62,4 +61,13 @@ func GetChallengeThemes(ctx context.Context) (model.ChallengeThemeSlice, error) 
 		return nil, err
 	}
 	return challengeThemeSlice, nil
+}
+
+func GetChallengeThemeByPK(ctx context.Context, id int) (*model.ChallengeTheme, error) {
+	data, err := model.FindChallengeTheme(ctx, db.DB, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
 }
