@@ -5,6 +5,7 @@ import (
 	"barcelonaZoo/api/requestBody"
 	"barcelonaZoo/api/response"
 	"barcelonaZoo/pkg/service/challengerecord"
+	"barcelonaZoo/pkg/service/challengetheme"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -60,14 +61,27 @@ func CreateChallengeRecord(ctx *gin.Context) {
 }
 
 func GetChallengeRecords(ctx *gin.Context) {
-	/*
-		idStr := ctx.Param("id")
-		id, err := strconv.Atoi(idStr)
-		if err != nil {
-			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "challenge theme id must be int"})
-			return
-		}
+	idStr := ctx.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "challenge theme id must be int"})
+		return
+	}
 
-		slice, err := challengerecord.GetChallengeRecords(ctx, id)
-	*/
+	// チャレンジテーマデータの取得
+	challengethemeData, err := challengetheme.GetChallengeThemeByPK(ctx, id)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	// チャレンジレコード一覧取得
+	slice, err := challengerecord.GetChallengeRecords(ctx, challengethemeData.ID, int(challengethemeData.RankingType.Int8))
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.AbortWithStatusJSON(http.StatusOK, response.ConvertToChallengeRecordSliceResponse(slice))
+	return
 }

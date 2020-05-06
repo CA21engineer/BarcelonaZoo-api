@@ -10,6 +10,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
+	"github.com/volatiletech/sqlboiler/queries/qm"
+)
+
+const (
+	asc  = 0
+	desc = 1
 )
 
 func CreateChallengeRecord(
@@ -48,9 +54,24 @@ func CreateChallengeRecord(
 	return newChallengeRecord, nil
 }
 
-/*
-func GetChallengeRecords(ctx *gin.Context, id int) (*model.ChallengeRecordSlice, error) {
-	slice, err := model.ChallengeRecord(
-		qm.Where("challenge_theme_id=?", id)).All(ctx, db.DB)
+func GetChallengeRecords(ctx *gin.Context, id, rankingType int) (model.ChallengeRecordSlice, error) {
+	var orderqm qm.QueryMod
+	switch rankingType {
+	case asc:
+		orderqm = qm.OrderBy("challenge_records.record")
+	case desc:
+		orderqm = qm.OrderBy("challenge_records.record DESC")
+	default:
+		orderqm = qm.OrderBy("challenge_records.created_at")
+	}
+
+	slice, err := model.ChallengeRecords(
+		qm.Where("challenge_theme_id=?", id),
+		orderqm,
+	).All(ctx, db.DB)
+	if err != nil {
+		return nil, err
+	}
+
+	return slice, nil
 }
-*/
