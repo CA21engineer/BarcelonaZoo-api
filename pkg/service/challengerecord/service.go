@@ -66,6 +66,7 @@ func GetChallengeRecords(ctx *gin.Context, id, rankingType int) (model.Challenge
 	}
 
 	slice, err := model.ChallengeRecords(
+		qm.Load("User"),
 		qm.Where("challenge_theme_id=?", id),
 		orderqm,
 	).All(ctx, db.DB)
